@@ -52,3 +52,4 @@ Getting Started
 * To build the project, run `mvn package`.
 * To run the application, use the provided `startup.sh` script or run the project's jar file directly.
 * The embedded H2 database will be automatically configured based on your entities when the application starts up.
+* Feel free to make any modifications to the existing code that you see fit so long as you continue to use Maven, Spring Boot, and Hibernate.
