@@ -52,4 +52,13 @@ public class UserService {
             return null;
         }
 	}
+
+    @Transactional
+    public void deleteUserByIdOrUserName(String idOrUserName) {
+        User user = findByIdOrUserName(idOrUserName);
+
+        if (user != null) {
+            userDao.delete(user.getId());
+        }
+    }
 }

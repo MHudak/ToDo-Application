@@ -66,4 +66,14 @@ public class UserServiceTest {
 		assertEquals(testUserId, result.getId());
 		assertEquals(updatedUserName, result.getUserName());
 	}
+
+	@Test
+	public void deleteUserTest() {
+		String userToDelete = "1";
+		Mockito.when(userDao.findOne(Mockito.anyLong())).thenReturn(testUser);
+
+		userService.deleteUserByIdOrUserName(userToDelete);
+
+		Mockito.verify(userDao, Mockito.times(1)).delete(testUserId);
+	}
 }
