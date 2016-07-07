@@ -1,7 +1,5 @@
 package nice;
 
-import nice.models.Task;
-import nice.models.TaskDao;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -9,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import nice.models.TaskDao;
+import nice.models.Task;
 import nice.models.UserDao;
 import nice.models.User;
 

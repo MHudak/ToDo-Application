@@ -13,30 +13,31 @@ import nice.services.UserService;
 
 @Controller
 @EnableAutoConfiguration
+@RequestMapping(value="/users")
 public class UsersController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value="/users", method=RequestMethod.GET)
+    @RequestMapping(method=RequestMethod.GET)
     @ResponseBody
     Iterable<User> getAllUsers() {
         return userService.findAll();
     }
 
-    @RequestMapping(value = "/users/{id}", method=RequestMethod.GET)
+    @RequestMapping(value = "{id}", method=RequestMethod.GET)
     @ResponseBody
     User getUserByIdOrUserName(@PathVariable("id") String idOrUserName) {
         return userService.findByIdOrUserName(idOrUserName);
     }
 
-    @RequestMapping(value="/users", method=RequestMethod.POST)
+    @RequestMapping(method=RequestMethod.POST)
     @ResponseBody
     User createUser(@RequestBody CreateUserRequest request) {
         return userService.createUser(request.getUserName());
     }
 
-    @RequestMapping(value="/users/{id}", method=RequestMethod.PUT)
+    @RequestMapping(value="{id}", method=RequestMethod.PUT)
     @ResponseBody
     User updateUser(@PathVariable("id") Long id, @RequestBody CreateUserRequest request) {
         return userService.updateUser(id, request.getUserName());
