@@ -20,7 +20,7 @@ public class UserServiceTest {
 	@InjectMocks
 	private UserService userService = new UserService();
 
-	private long testUserId = 1l;
+	private long testUserId = 1L;
 	private String testUserName = "testUserName1";
 	private User testUser;
 
