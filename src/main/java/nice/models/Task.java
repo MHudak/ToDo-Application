@@ -10,8 +10,8 @@ import javax.persistence.*;
 public class Task {
 
     public enum Status {
-        NOT_STARTED("Not Started"),
-        IN_PROGRESS("In Progress"),
+        NOT_STARTED("NotStarted"),
+        IN_PROGRESS("InProgress"),
         COMPLETE("Complete");
         Status(String status) {
             this.status = status;
@@ -20,6 +20,17 @@ public class Task {
         public String status() {
             return status;
         }
+        public static Status fromString(String text) {
+            if (text != null) {
+                for (Status b : Status.values()) {
+                    if (text.equalsIgnoreCase(b.status)) {
+                        return b;
+                    }
+                }
+            }
+            return null;
+        }
+
     }
 
     @Id

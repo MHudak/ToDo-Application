@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import nice.models.Task;
 import nice.services.TaskService;
 
+import java.util.Set;
+
 @Controller
 @EnableAutoConfiguration
 @RequestMapping(value="/tasks")
@@ -21,6 +23,21 @@ public class TasksController {
     Iterable<Task> getAllTasks() {
         return TaskService.findAll();
     }
+
+    @RequestMapping(method=RequestMethod.GET, params = "status")
+    @ResponseBody
+    Iterable<Task> getAllTasksByStatus(@RequestParam("status") String status) {
+        return TaskService.findAllByStatus(Task.Status.fromString(status));
+    }
+
+    //TODO: Smells a bit...research better URL spec for filtering
+    // Maybe (http://www.baeldung.com/rest-api-search-language-spring-data-specifications)
+    @RequestMapping(method=RequestMethod.GET, params = "notStatus")
+    @ResponseBody
+    Iterable<Task> getAllTasksByStatusNot(@RequestParam("notStatus") String status) {
+        return TaskService.findAllByStatusNotEqualTo(Task.Status.fromString(status));
+    }
+
 
     @RequestMapping(value = "{id}", method=RequestMethod.GET)
     @ResponseBody
@@ -39,4 +56,5 @@ public class TasksController {
     Task updateTask(@PathVariable("id") Long id, @RequestBody CreateTaskRequest request) {
         return TaskService.updateTask(id, request.getTaskName());
     }
+
 }

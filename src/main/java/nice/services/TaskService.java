@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import nice.models.Task;
 import nice.models.TaskDao;
 
+import java.util.Set;
+
 
 @Service
 public class TaskService {
@@ -53,4 +55,15 @@ public class TaskService {
             return null;
         }
 	}
+
+    @Transactional
+    public Set<Task> findAllByStatus(Task.Status status) {
+        return taskDao.findByTaskStatus(status);
+    }
+
+    @Transactional
+    public Set<Task> findAllByStatusNotEqualTo(Task.Status status) {
+        return taskDao.findByTaskStatusNot(status);
+    }
+
 }
