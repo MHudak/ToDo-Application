@@ -9,12 +9,25 @@ import javax.persistence.*;
 @Table(name = "tasks")
 public class Task {
 
+    public enum Status {
+        NOT_STARTED("Not Started"),
+        IN_PROGRESS("In Progress"),
+        COMPLETE("Complete");
+        Status(String status) {
+            this.status = status;
+        }
+        private final String status;
+        public String status() {
+            return status;
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String taskName;
     private String taskDesc;
-    private String taskStatus;
+    private Status taskStatus = Status.NOT_STARTED;
 
     @ManyToOne
     @JoinColumn(name = "assignedUserId")
@@ -26,12 +39,29 @@ public class Task {
         this.taskName = taskName;
     }
 
+    public Task(String taskName, Status taskStatus) {
+        this.taskName = taskName;
+        this.taskStatus = taskStatus;
+    }
+
+    public Task(String taskName, User assignedUser) {
+        this.taskName = taskName;
+        this.assignedUser = assignedUser;
+    }
+
+    public Task(String taskName, User assignedUser, Status taskStatus) {
+        this.taskName = taskName;
+        this.assignedUser = assignedUser;
+        this.taskStatus = taskStatus;
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "Task[id=%d, taskName='%s']",
-                id, taskName);
+                "Task[id=%d, taskName='%s', taskStatus='%s']",
+                id, taskName, taskStatus);
     }
+
     public long getId() {
         return id;
     }
@@ -56,11 +86,11 @@ public class Task {
         this.taskDesc = taskDesc;
     }
 
-    public String getTaskStatus() {
+    public Status getTaskStatus() {
         return taskStatus;
     }
 
-    public void setTaskStatus(String taskStatus) {
+    public void setTaskStatus(Status taskStatus) {
         this.taskStatus = taskStatus;
     }
 

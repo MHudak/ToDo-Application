@@ -20,14 +20,12 @@ public class Application {
 	@Bean
 	CommandLineRunner init(UserDao userDao, TaskDao taskDao) {
 		return (evt) -> {
-			User user = userDao.save(new User("niceUser1"));
-			userDao.save(new User("niceUser2"));
+			User user1 = userDao.save(new User("niceUser1"));
+			User user2 = userDao.save(new User("niceUser2"));
 			userDao.save(new User("niceUser3"));
 			taskDao.save(new Task("niceTask1"));
-			taskDao.save(new Task("niceTask2"));
-			Task task = new Task("niceTask3");
-			task.setAssignedUser(user);
-			taskDao.save(task);
+			taskDao.save(new Task("niceTask2", user2));
+			taskDao.save(new Task("niceTask3", user1, Task.Status.IN_PROGRESS));
 		};
 	}
 
