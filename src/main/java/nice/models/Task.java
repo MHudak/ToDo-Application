@@ -16,6 +16,10 @@ public class Task {
     private String taskDesc;
     private String taskStatus;
 
+    @ManyToOne
+    @JoinColumn(name = "assignedUserId")
+    private User assignedUser;
+
     protected Task() {}
 
     public Task(String taskName) {
@@ -58,6 +62,14 @@ public class Task {
 
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
+    }
+
+    public User getAssignedUser() {
+        return assignedUser;
+    }
+
+    public void setAssignedUser(User assignedUser) {
+        this.assignedUser = assignedUser;
     }
 
     @Override

@@ -1,10 +1,9 @@
 package nice.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -14,6 +13,13 @@ public class User {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
     private String userName;
+
+    //Was getting recursive calls and stack overflow,
+    //Ignore assignedTasks when converting to JSON.
+    //TODO: Revisit and include assignedTasks in JSON
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "assignedUser", cascade = CascadeType.ALL)
+    private Set<Task> assignedTasks;
 
     protected User() {}
 
@@ -42,6 +48,14 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Set<Task> getAssignedTasks() {
+        return assignedTasks;
+    }
+
+    public void setAssignedTasks(Set<Task> assignedTasks) {
+        this.assignedTasks = assignedTasks;
     }
 
     @Override

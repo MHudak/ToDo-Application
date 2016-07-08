@@ -1,5 +1,6 @@
 package nice.services;
 
+import nice.models.Task;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -9,6 +10,9 @@ import nice.models.User;
 import nice.models.UserDao;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -23,12 +27,16 @@ public class UserServiceTest {
 	private long testUserId = 1L;
 	private String testUserName = "testUserName1";
 	private User testUser;
+	private String testTaskName = "testTaskName1";
 
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		testUser = new User(testUserName);
 		testUser.setId(testUserId);
+		Set<Task> tasks = new HashSet<>();
+		tasks.add(new Task(testTaskName));
+		testUser.setAssignedTasks(tasks);
 	}
 
 	@Test
@@ -69,11 +77,21 @@ public class UserServiceTest {
 
 	@Test
 	public void deleteUserTest() {
-		String userToDelete = "1";
+		String userToDelete = testUserName;
 		Mockito.when(userDao.findOne(Mockito.anyLong())).thenReturn(testUser);
 
 		userService.deleteUserByIdOrUserName(userToDelete);
 
 		Mockito.verify(userDao, Mockito.times(1)).delete(testUserId);
+	}
+
+	@Test
+	public void listUserTasksTest() {
+		Mockito.when(userDao.findOne(Mockito.anyLong())).thenReturn(testUser);
+
+		Set<Task> tasks = userService.getTasksForUserId(testUserId);
+
+		assertNotNull(tasks);
+		assertEquals(1, tasks.size());
 	}
 }

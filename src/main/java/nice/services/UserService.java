@@ -1,11 +1,14 @@
 package nice.services;
 
+import nice.models.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import nice.models.User;
 import nice.models.UserDao;
+
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -59,6 +62,18 @@ public class UserService {
 
         if (user != null) {
             userDao.delete(user.getId());
+        }
+    }
+
+    @Transactional
+    public Set<Task> getTasksForUserId(Long id) {
+        User user = userDao.findOne(id);
+
+        if (user !=null) {
+            return user.getAssignedTasks();
+        }
+        else {
+            return null;
         }
     }
 }

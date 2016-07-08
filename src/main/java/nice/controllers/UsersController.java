@@ -1,5 +1,6 @@
 package nice.controllers;
 
+import nice.models.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 import nice.models.User;
 import nice.services.UserService;
@@ -46,5 +48,11 @@ public class UsersController {
     @RequestMapping(value="{id}", method=RequestMethod.DELETE)
     void deleteUser(@PathVariable("id") String idOrUserName) {
         userService.deleteUserByIdOrUserName(idOrUserName);
+    }
+
+    @RequestMapping(value="{id}/tasks", method=RequestMethod.GET)
+    @ResponseBody
+    Set<Task> getTasksForUser(@PathVariable("id") String idOrUserName) {
+        return userService.getTasksForUserId(userService.findByIdOrUserName(idOrUserName).getId());
     }
 }
