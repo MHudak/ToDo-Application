@@ -52,4 +52,9 @@ public class UserService {
             return null;
         }
 	}
+
+    @Transactional
+    public void deleteUser(Long id) {
+        userDao.delete(id);
+    }
 }

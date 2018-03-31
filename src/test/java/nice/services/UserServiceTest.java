@@ -86,4 +86,11 @@ public class UserServiceTest {
 
 		Mockito.verify(userDao, Mockito.times(1)).findAll();
 	}
+
+	@Test
+	public void deleteUserTest() {
+		userService.deleteUser(testUserId);
+
+		Mockito.verify(userDao, Mockito.times(1)).delete(testUserId);
+	}
 }

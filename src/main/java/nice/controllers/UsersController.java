@@ -3,6 +3,8 @@ package nice.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,12 @@ public class UsersController {
 
     @Autowired
     private UserService userService;
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity exception() {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was an error processing the request.");
+    }
 
     @RequestMapping(value="/users", method=RequestMethod.GET)
     @ResponseBody
@@ -40,5 +48,12 @@ public class UsersController {
     @ResponseBody
     User updateUser(@PathVariable("id") Long id, @RequestBody CreateUserRequest request) {
         return userService.updateUser(id, request.getUserName());
+    }
+
+    @RequestMapping(value="/users/{id}", method=RequestMethod.DELETE)
+    @ResponseBody
+    String deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
+        return "User " + id + " was deleted successfully";
     }
 }
