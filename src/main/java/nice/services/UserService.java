@@ -44,13 +44,9 @@ public class UserService {
 
 	@Transactional
 	public User updateUser(Long id, String userName) {
-		try {
-            User user = userDao.findOne(id);
-            user.setUserName(userName);
-            return userDao.save(user);
-        } catch (Exception e) {
-            return null;
-        }
+        User user = userDao.findOne(id);
+        user.setUserName(userName);
+        return userDao.save(user);
 	}
 
     @Transactional
