@@ -10,6 +10,9 @@ import nice.models.UserDao;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class UserServiceTest {
@@ -65,5 +68,22 @@ public class UserServiceTest {
 		assertNotNull(result);
 		assertEquals(testUserId, result.getId());
 		assertEquals(updatedUserName, result.getUserName());
+	}
+
+
+	@Test
+	public void listUsersTest() {
+
+		List<User> userList = new ArrayList<>();
+		userList.add(testUser);
+		User testUser2 = new User("User1");
+		userList.add(testUser2);
+
+		Mockito.when(userDao.findAll()).thenReturn(userList);
+
+		Iterable<User> users = userService.findAll();
+		users.forEach(user -> assertTrue(userList.contains(user)));
+
+		Mockito.verify(userDao, Mockito.times(1)).findAll();
 	}
 }
