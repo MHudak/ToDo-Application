@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import nice.models.User;
-import nice.models.UserDao;
+import nice.models.user.User;
+import nice.dao.UserDao;
 
 @Service
 public class UserService {

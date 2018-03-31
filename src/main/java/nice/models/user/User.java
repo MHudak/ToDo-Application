@@ -1,4 +1,4 @@
-package nice.models;
+package nice.models.user;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

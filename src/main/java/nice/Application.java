@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import nice.models.UserDao;
-import nice.models.User;
+import nice.dao.UserDao;
+import nice.models.user.User;
 
 @Configuration
 @ComponentScan

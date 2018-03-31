@@ -1,16 +1,14 @@
 package nice.controllers;
 
+import nice.models.user.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-import nice.models.User;
+import nice.models.user.User;
 import nice.services.UserService;
 
 @Controller
@@ -40,13 +38,13 @@ public class UsersController {
 
     @RequestMapping(value="/users", method=RequestMethod.POST)
     @ResponseBody
-    User createUser(@RequestBody CreateUserRequest request) {
+    User createUser(@RequestBody UserRequest request) {
         return userService.createUser(request.getUserName());
     }
 
     @RequestMapping(value="/users/{id}", method=RequestMethod.PUT)
     @ResponseBody
-    User updateUser(@PathVariable("id") Long id, @RequestBody CreateUserRequest request) {
+    User updateUser(@PathVariable("id") Long id, @RequestBody UserRequest request) {
         return userService.updateUser(id, request.getUserName());
     }
 

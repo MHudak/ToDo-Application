@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import nice.models.User;
-import nice.models.UserDao;
+import nice.models.user.User;
+import nice.dao.UserDao;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
