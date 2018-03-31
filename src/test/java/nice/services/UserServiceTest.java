@@ -47,7 +47,7 @@ public class UserServiceTest {
 
 		Mockito.verify(userDao, Mockito.times(1)).save(Mockito.any(User.class));
 		assertNotNull(user);
-		assertNotNull(user.getId());
+		assertEquals(testUserId, user.getId());
 		assertEquals(testUserName, user.getUserName());
 	}
 
