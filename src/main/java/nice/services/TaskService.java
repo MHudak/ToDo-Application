@@ -1,6 +1,7 @@
 package nice.services;
 
 import nice.dao.TaskDao;
+import nice.models.task.Status;
 import nice.models.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,4 +33,8 @@ public class TaskService {
         return taskDao.save(task);
     }
 
+    @Transactional
+    public Iterable<Task> findByStatus(Status status) {
+        return taskDao.findByStatus(status);
+    }
 }

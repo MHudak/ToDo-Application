@@ -2,6 +2,7 @@ package nice;
 
 import nice.dao.TaskDao;
 import nice.dao.UserDao;
+import nice.models.task.Status;
 import nice.models.task.Task;
 import nice.models.user.User;
 import org.springframework.boot.CommandLineRunner;
@@ -22,7 +23,9 @@ public class Application {
 			userDao.save(new User("niceUser1"));
 			userDao.save(new User("niceUser2"));
 			userDao.save(new User("niceUser3"));
-			taskDao.save(new Task("task1"));
+			Task t = new Task("Task1");
+			t.setStatus(Status.IN_PROGRESS);
+			taskDao.save(t);
 			taskDao.save(new Task("task2"));
 		};
 	}

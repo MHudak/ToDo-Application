@@ -1,6 +1,7 @@
 package nice.services;
 
 import nice.dao.TaskDao;
+import nice.models.task.Status;
 import nice.models.task.Task;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +25,7 @@ public class TaskServiceTest {
 
     private long testTaskId = 1l;
     private String testTaskName = "Test Task Name";
+    private Status testTaskStatus = Status.COMPLETE;
     private Task testTask;
 
     @Before
@@ -32,6 +34,7 @@ public class TaskServiceTest {
         testTask = new Task();
         testTask.setName(testTaskName);
         testTask.setId(testTaskId);
+        testTask.setStatus(testTaskStatus);
     }
 
     @Test
@@ -79,5 +82,21 @@ public class TaskServiceTest {
         tasks.forEach(task -> assertTrue(taskList.contains(task)));
 
         Mockito.verify(taskDao, Mockito.times(1)).findAll();
+    }
+
+    @Test
+    public void listTasksByStatus() {
+
+        Status status = Status.IN_PROGRESS;
+
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(testTask);
+
+        Mockito.when(taskDao.findByStatus(status)).thenReturn(taskList);
+
+        Iterable<Task> tasks = taskService.findByStatus(testTaskStatus);
+        tasks.forEach(task -> assertTrue(taskList.contains(task)));
+
+        Mockito.verify(taskDao, Mockito.times(1)).findByStatus(testTaskStatus);
     }
 }

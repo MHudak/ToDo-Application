@@ -1,5 +1,6 @@
 package nice.controllers;
 
+import nice.models.task.Status;
 import nice.models.task.Task;
 import nice.models.task.TaskRequest;
 import nice.models.user.User;
@@ -36,9 +37,13 @@ public class TaskController {
 
     @RequestMapping(value="/tasks", method=RequestMethod.GET)
     @ResponseBody
-    Iterable<Task> getAllTasks() {
+    Iterable<Task> getAllTasks(@RequestParam(value="status", required = false) String status) {
+        if(status != null){
+            return taskService.findByStatus(Status.create(status));
+        }
         return taskService.getAllTasks();
     }
+
 
 
     @RequestMapping(value="/tasks/{id}", method=RequestMethod.PUT)
