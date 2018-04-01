@@ -21,4 +21,15 @@ public class TaskService {
     public Iterable<Task> getAllTasks() {
         return taskDao.findAll();
     }
+
+    @Transactional
+    public Task updateTask(Task task) {
+        Task t = taskDao.findOne(task.getId());
+        t.setName(task.getName());
+        t.setStatus(task.getStatus());
+        t.setAssignedUser(task.getAssignedUser());
+        t.setDescription(task.getDescription());
+        return taskDao.save(task);
+    }
+
 }

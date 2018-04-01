@@ -6,10 +6,7 @@ import nice.models.user.User;
 import nice.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -41,6 +38,26 @@ public class TaskController {
     @ResponseBody
     Iterable<Task> getAllTasks() {
         return taskService.getAllTasks();
+    }
+
+
+    @RequestMapping(value="/tasks/{id}", method=RequestMethod.PUT)
+    @ResponseBody
+    Task updateTask(@PathVariable("id") Long id, @RequestBody TaskRequest request) {
+
+        Task task = new Task();
+        task.setId(id);
+        task.setDescription(request.getDescription());
+        task.setName(request.name);
+        task.setStatus(request.status);
+
+        if(request.getAssignedUser() != null){
+            User user = new User();
+            user.setId(request.getAssignedUser());
+            task.setAssignedUser(user);
+        }
+
+        return taskService.updateTask(task);
     }
 
 }

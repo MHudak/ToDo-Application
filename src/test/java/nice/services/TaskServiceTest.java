@@ -47,6 +47,25 @@ public class TaskServiceTest {
     }
 
     @Test
+    public void updateTaskTest() {
+        String updatedTaskName = "updatedTaskName";
+        Task updatedTask = new Task(updatedTaskName);
+        updatedTask.setId(testTaskId);
+
+        Mockito.when(taskDao.findOne(Mockito.anyLong())).thenReturn(testTask);
+        Mockito.when(taskDao.save(updatedTask)).thenReturn(updatedTask);
+
+        Task result = taskService.updateTask(updatedTask);
+
+        Mockito.verify(taskDao, Mockito.times(1)).save(updatedTask);
+        Mockito.verify(taskDao, Mockito.times(1)).findOne(testTaskId);
+
+        assertNotNull(result);
+        assertEquals(updatedTask.getId(), result.getId());
+        assertEquals(updatedTaskName, result.getName());
+    }
+
+    @Test
     public void listTaskTest() {
 
         List<Task> taskList = new ArrayList<>();
@@ -57,7 +76,7 @@ public class TaskServiceTest {
         Mockito.when(taskDao.findAll()).thenReturn(taskList);
 
         Iterable<Task> tasks = taskService.getAllTasks();
-        tasks.forEach(user -> assertTrue(taskList.contains(user)));
+        tasks.forEach(task -> assertTrue(taskList.contains(task)));
 
         Mockito.verify(taskDao, Mockito.times(1)).findAll();
     }
