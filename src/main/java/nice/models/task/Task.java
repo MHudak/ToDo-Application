@@ -27,4 +27,8 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    public Task(){}
+    public Task(String name){
+        this.name = name;
+    }
 }

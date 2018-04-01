@@ -16,4 +16,9 @@ public class TaskService {
     public Task createTask(Task task) {
         return taskDao.save(task);
     }
+
+    @Transactional
+    public Iterable<Task> getAllTasks() {
+        return taskDao.findAll();
+    }
 }

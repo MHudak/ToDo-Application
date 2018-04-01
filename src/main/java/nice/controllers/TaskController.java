@@ -36,5 +36,12 @@ public class TaskController {
 
         return taskService.createTask(task);
     }
+
+    @RequestMapping(value="/tasks", method=RequestMethod.GET)
+    @ResponseBody
+    Iterable<Task> getAllTasks() {
+        return taskService.getAllTasks();
+    }
+
 }
 

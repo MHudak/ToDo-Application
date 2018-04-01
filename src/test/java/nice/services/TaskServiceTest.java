@@ -9,8 +9,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class TaskServiceTest {
 
@@ -42,5 +44,21 @@ public class TaskServiceTest {
         assertNotNull(task);
         assertEquals(testTaskId, task.getId());
         assertEquals(testTaskName, task.getName());
+    }
+
+    @Test
+    public void listTaskTest() {
+
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(testTask);
+        Task testTask2 = new Task("Task2");
+        taskList.add(testTask2);
+
+        Mockito.when(taskDao.findAll()).thenReturn(taskList);
+
+        Iterable<Task> tasks = taskService.getAllTasks();
+        tasks.forEach(user -> assertTrue(taskList.contains(user)));
+
+        Mockito.verify(taskDao, Mockito.times(1)).findAll();
     }
 }
