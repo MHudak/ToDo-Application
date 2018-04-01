@@ -85,11 +85,28 @@ public class TaskServiceTest {
     }
 
     @Test
-    public void listTasksByStatus() {
+    public void listTasksByStatusInProgress() {
 
         Status status = Status.IN_PROGRESS;
 
         List<Task> taskList = new ArrayList<>();
+        taskList.add(testTask);
+
+        Mockito.when(taskDao.findByStatus(status)).thenReturn(taskList);
+
+        Iterable<Task> tasks = taskService.findByStatus(testTaskStatus);
+        tasks.forEach(task -> assertTrue(taskList.contains(task)));
+
+        Mockito.verify(taskDao, Mockito.times(1)).findByStatus(testTaskStatus);
+    }
+
+    @Test
+    public void listTasksByStatusComplete() {
+
+        Status status = Status.COMPLETE;
+
+        List<Task> taskList = new ArrayList<>();
+        testTask.setStatus(status);
         taskList.add(testTask);
 
         Mockito.when(taskDao.findByStatus(status)).thenReturn(taskList);

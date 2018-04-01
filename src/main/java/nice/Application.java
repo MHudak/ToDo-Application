@@ -24,9 +24,11 @@ public class Application {
 			userDao.save(new User("niceUser2"));
 			userDao.save(new User("niceUser3"));
 			Task t = new Task("Task1");
-			t.setStatus(Status.IN_PROGRESS);
+			t.setStatus(Status.COMPLETE);
 			taskDao.save(t);
-			taskDao.save(new Task("task2"));
+			Task t2 = new Task("Task2");
+			t2.setStatus(Status.IN_PROGRESS);
+			taskDao.save(t2);
 		};
 	}
 
