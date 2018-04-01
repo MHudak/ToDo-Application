@@ -94,10 +94,10 @@ public class TaskServiceTest {
 
         Mockito.when(taskDao.findByStatus(status)).thenReturn(taskList);
 
-        Iterable<Task> tasks = taskService.findByStatus(testTaskStatus);
+        Iterable<Task> tasks = taskService.findByStatus(status);
         tasks.forEach(task -> assertTrue(taskList.contains(task)));
 
-        Mockito.verify(taskDao, Mockito.times(1)).findByStatus(testTaskStatus);
+        Mockito.verify(taskDao, Mockito.times(1)).findByStatus(status);
     }
 
     @Test
@@ -115,5 +115,21 @@ public class TaskServiceTest {
         tasks.forEach(task -> assertTrue(taskList.contains(task)));
 
         Mockito.verify(taskDao, Mockito.times(1)).findByStatus(testTaskStatus);
+    }
+
+    @Test
+    public void listTasksByStatusNotComplete() {
+
+        Status status = Status.COMPLETE;
+
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(testTask);
+
+        Mockito.when(taskDao.findByStatusNot(status)).thenReturn(taskList);
+
+        Iterable<Task> tasks = taskService.findByStatusNot(testTaskStatus);
+        tasks.forEach(task -> assertTrue(taskList.contains(task)));
+
+        Mockito.verify(taskDao, Mockito.times(1)).findByStatusNot(testTaskStatus);
     }
 }

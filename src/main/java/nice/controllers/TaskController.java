@@ -37,8 +37,13 @@ public class TaskController {
 
     @RequestMapping(value="/tasks", method=RequestMethod.GET)
     @ResponseBody
-    Iterable<Task> getAllTasks(@RequestParam(value="status", required = false) String status) {
+    Iterable<Task> getAllTasks(@RequestParam(value="status", required = false) String status,
+                               @RequestParam(value="exclude", required = false) boolean isExclude
+                               ) {
         if(status != null){
+            if(isExclude){
+                return taskService.findByStatusNot(Status.create(status));
+            }
             return taskService.findByStatus(Status.create(status));
         }
         return taskService.getAllTasks();

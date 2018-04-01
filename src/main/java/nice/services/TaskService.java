@@ -37,4 +37,9 @@ public class TaskService {
     public Iterable<Task> findByStatus(Status status) {
         return taskDao.findByStatus(status);
     }
+
+    @Transactional
+    public Iterable<Task> findByStatusNot(Status status) {
+        return taskDao.findByStatusNot(status);
+    }
 }

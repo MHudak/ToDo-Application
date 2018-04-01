@@ -10,5 +10,6 @@ import javax.transaction.Transactional;
 public interface TaskDao extends CrudRepository<Task, Long> {
 
     public Iterable<Task> findByStatus(Status status);
+    public Iterable<Task> findByStatusNot(Status status);
 
 }
