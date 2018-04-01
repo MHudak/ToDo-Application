@@ -15,7 +15,7 @@ public class User {
     private long id;
     private String userName;
 
-    protected User() {}
+    public User() {}
 
     public User(String userName) {
         this.userName = userName;
