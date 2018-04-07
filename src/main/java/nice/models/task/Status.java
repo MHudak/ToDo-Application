@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public enum Status {
-    NOT_STARTED ("Not Started"),
-    IN_PROGRESS ("In Progress"),
+    NOT_STARTED ("Not_Started"),
+    IN_PROGRESS ("In_Progress"),
     COMPLETE ("Complete");
 
     private final static String valuesText =
@@ -27,7 +27,7 @@ public enum Status {
         }
 
         for(Status s : Status.values()){
-            if(value.equals(s.text)){
+            if(value.equalsIgnoreCase(s.text)){
                 return s;
             }
         }
